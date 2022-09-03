@@ -1,21 +1,24 @@
-const product = window.location.search.split("?").join("");
 
+const product = window.location.search.split("?").join("");
 let productsData = [];
 let affichageQuantite = document.getElementById("totalQuantity");
 
+
+//////////////  FETCH A L'API  //////////////
 
 const fetchproduct = async () => {
     await fetch(`http://localhost:3000/api/products/${product}`)
         .then((res) => res.json())
         .then((promise) => {
             productsData = promise;
-            // console.log(promise);
         })
         .catch((error) => {
             alert(error)
         })
 };
 
+
+///////////////   INTRODUCTION DYNAMIQUE DE LA CART SELECTIONNE SUR L'INDEX  ////////////////////
 
 const produitDisplay = async () => {
     await fetchproduct();
@@ -37,6 +40,8 @@ const produitDisplay = async () => {
 produitDisplay();
 
 
+////////////  AJOUT DU PRODUIT DANS LE LOCALSTORAGE ET RECUPERATION DANS LE PANIER  ///////////
+
 const addCanape = () => {
     let bouton = document.getElementById('addToCart');
     bouton.addEventListener("click", () => {
@@ -45,19 +50,12 @@ const addCanape = () => {
 
         let nombreArticles = document.getElementById("quantity");
         let prixArticle = document.getElementById("price");
-        // let coupTotal = (nombreArticles * prixArticle);
 
-
-        // console.log(produitTableau);
 
         const fusionProduitColors = Object.assign({}, productsData, {
             colors: `${select.value}`,
             quantite: 1,
             quantite: `${nombreArticles.value}`,
-
-            // price: `${(nombreArticles.value) * (prixArticle.value)}`
-            // price: `${(coupTotal.value)}`
-            // price: `${(price * quantite)}`
         });
         console.log(fusionProduitColors);
 
@@ -65,10 +63,7 @@ const addCanape = () => {
             produitTableau = [];
             meubleQuantiteTotal = [];
             produitTableau.push(fusionProduitColors);
-            // console.log(produitTableau);
             localStorage.setItem("produit", JSON.stringify(produitTableau));
-            // produitTableau = JSON.parse(localStorage.getItem("produit"));
-            // spanQuantite.textContent = addQuantity(produitTableau);
 
         } else if (produitTableau != null) {
             meubleQuantiteTotal = [];
@@ -84,13 +79,9 @@ const addCanape = () => {
                         localStorage.setItem("produit", JSON.stringify(produitTableau)),
                         (produitTableau = JSON.parse(localStorage.getItem("produit"))),
                         console.log("yorchi !")
-                        // (affichageQuantite.textContent = produitTableau)
-
-                        // (affichageQuantite.textContent = addQuantity(produitTableau)),
                     );
                 }
             }
-
             for (i = 0; i < produitTableau.length; i++) {
                 if (
                     (produitTableau[i]._id == productsData._id &&
@@ -101,9 +92,6 @@ const addCanape = () => {
                         produitTableau.push(fusionProduitColors),
                         localStorage.setItem("produit", JSON.stringify(produitTableau)),
                         (produitTableau = JSON.parse(localStorage.getItem("produit")))
-                        // (affichageQuantite.textContent = produitTableau)
-
-                        // (spanQuantite.textContent = addQuantity(produitTableau))
                     );
                 }
             }
@@ -111,8 +99,6 @@ const addCanape = () => {
     });
     return (
         (produitTableau = JSON.parse(localStorage.getItem("produit")))
-        // (affichageQuantite.textContent = produitTableau)
 
-        //     (spanQuantite.textContent = addQuantity(produitTableau))
     );
 };

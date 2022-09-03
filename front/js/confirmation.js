@@ -1,6 +1,10 @@
+
 const commandes = JSON.parse(localStorage.getItem("commandes"));
 
 let numerosDeCommande = document.getElementById("orderId");
+
+
+///////////  AFFICHER LE NUMEROS DE LA COMMANDE  /////////////////
 
 const commandeDispaly = async () => {
     console.log("fonction commande");

@@ -5,7 +5,6 @@ let someProduct = [];
 let sommeProduits;
 let commandeProducts = JSON.parse(localStorage.getItem("commandes"));
 
-
 let section = document.getElementById("cart__items");
 let quantiteTotal = document.getElementById("totalQuantity");
 let prixTotal = document.getElementById("totalPrice");
@@ -55,11 +54,6 @@ const panierDisplay = async () => {
 panierDisplay();
 
 
-
-
-
-
-
 ///////////  FONCTION DE MODIFICATION DES QUANTITE  ///////////
 
 const modificationQuantite = async (panierDisplay) => {
@@ -82,11 +76,6 @@ const modificationQuantite = async (panierDisplay) => {
     });
   });
 };
-
-
-
-
-
 
 
 /////////////  SUPPRESSION DES PRODUITS DANS LE PANIER  ////////////////
@@ -122,14 +111,7 @@ const removeProduct = async (panierDisplay) => {
 };
 
 
-
-
-
-
-
-
-
-
+/////////////  CALCUL DU PRODUIT TOTAL  ////////////////
 
 const calculProduit = async (
   panierDisplay,
@@ -160,20 +142,9 @@ const calculProduit = async (
 };
 
 
-
-
-
-
-
-
-
-
-
 ////////////////////////  AFFICHAGE DES QUANTITE ET DES PRIX ////////////////////////
 
-
 let produitLocal = JSON.parse(localStorage.getItem("produit"));
-
 let meubleQuantiteTotal = [];
 let meublePrixTotal = [];
 
@@ -193,23 +164,17 @@ if (produitLocal) {
 
 
 
+/////////////////////////////////////       FORMULAIRE DE CONTACT      ////////////////////////////////////
 
 
-
-
-
-
-////////////////////////  FORMULAIRE DE CONTACT ////////////////////////
 
 const prenom = document.getElementById("firstName");
 const nom = document.getElementById("lastName");
 const adresse = document.getElementById("address");
 const ville = document.getElementById("city");
 const email = document.getElementById("email");
-
 const formulaire = document.querySelector(".cart__order__form");
 const btn = document.getElementById("order");
-
 const errorMessagePrenom = document.getElementById("firstNameErrorMsg");
 const errorMessageNom = document.getElementById("lastNameErrorMsg");
 const errorMessageAdresse = document.getElementById("addressErrorMsg");
@@ -217,8 +182,10 @@ const errorMessageVille = document.getElementById("cityErrorMsg");
 const errorMessageEmail = document.getElementById("emailErrorMsg");
 
 
-
 let valuePrenom, valueNom, valueAdresse, valueVille, valueEmail;
+
+///////////////  VERRIFICATION DU CHAMP PRENOM DU FORMULAIRE  ///////////////////////
+
 prenom.addEventListener("input", (e) => {
   valuePrenom;
   if (e.target.value.length == 0) {
@@ -240,7 +207,7 @@ prenom.addEventListener("input", (e) => {
 });
 
 
-
+///////////////  VERRIFICATION DU CHAMP NOM DU FORMULAIRE  ///////////////////////
 
 nom.addEventListener("input", (e) => {
   valueNom;
@@ -263,7 +230,7 @@ nom.addEventListener("input", (e) => {
 });
 
 
-
+///////////////  VERRIFICATION DU CHAMP ADRESSE DU FORMULAIRE  ///////////////////////
 
 adresse.addEventListener("input", (e) => {
   valueAdresse;
@@ -286,6 +253,7 @@ adresse.addEventListener("input", (e) => {
 });
 
 
+///////////////  VERRIFICATION DU CHAMP VILLE DU FORMULAIRE  ///////////////////////
 
 ville.addEventListener("input", (e) => {
   valueVille;
@@ -308,6 +276,7 @@ ville.addEventListener("input", (e) => {
 });
 
 
+///////////////  VERRIFICATION DU CHAMP EMAIL DU FORMULAIRE  ///////////////////////
 
 email.addEventListener("input", (e) => {
   if (e.target.value.length == 0) {
@@ -327,7 +296,7 @@ email.addEventListener("input", (e) => {
 
 
 
-
+////////////////////  PASSER LA COMMANDE  ////////////////////// 
 
 formulaire.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -350,7 +319,6 @@ formulaire.addEventListener("submit", (e) => {
     };
     console.log("data : _2", data);
 
-    ///////////// fesh get ////////////
     fetch('http://localhost:3000/api/products/order', {
       method: "post",
       headers: { "content-Type": "application/json" },
@@ -366,7 +334,6 @@ formulaire.addEventListener("submit", (e) => {
           articles: reponseServeur.products,
           Total: sommeProduits,
         };
-
         if (commandeProducts == null) {
           commandeProducts = [];
           commandeProducts.push(dataCommande);
