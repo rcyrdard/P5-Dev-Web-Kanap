@@ -192,16 +192,16 @@ prenom.addEventListener("input", (e) => {
     errorMessagePrenom.innerHTML = "";
     valuePrenom = null;
   }
-  else if (e.target.value.length < 3 || e.target.value.length > 25) {
-    errorMessagePrenom.innerHTML = "Prenom doit contenir entre 3 et 25 caractéres";
+  else if (e.target.value.length < 1 || e.target.value.length > 25) {
+    errorMessagePrenom.innerHTML = "Prenom doit contenir entre 1 et 25 caractéres";
     valuePrenom = null;
   }
-  if (e.target.value.match(/^[a-z A-Z]{3,25}$/)) {
+  if (e.target.value.match(/^[a-z A-Z À-ÿ \-]{1,25}$/)) {
     errorMessagePrenom.innerHTML = "";
     valuePrenom = e.target.value;
   }
-  if (!e.target.value.match(/^[a-z A-Z]{3,25}$/) && e.target.value.length > 3 && e.target.value.length < 25) {
-    errorMessagePrenom.innerHTML = "Prenom ne contien pas de caractéres spécial";
+  if (!e.target.value.match(/^[a-z A-Z À-ÿ \-]{1,25}$/) && e.target.value.length > 1 && e.target.value.length < 25) {
+    errorMessagePrenom.innerHTML = "Prenom ne contien pas de caractéres spécial hors mis les accents et les tirets";
     valuePrenom = null;
   }
 });
@@ -215,16 +215,16 @@ nom.addEventListener("input", (e) => {
     errorMessageNom.innerHTML = "";
     valueNom = null;
   }
-  else if (e.target.value.length < 3 || e.target.value.length > 25) {
-    errorMessageNom.innerHTML = "Nom doit contenir entre 3 et 25 caractéres";
+  else if (e.target.value.length < 1 || e.target.value.length > 25) {
+    errorMessageNom.innerHTML = "Nom doit contenir entre 1 et 25 caractéres";
     valueNom = null;
   }
-  if (e.target.value.match(/^[a-z A-Z]{3,25}$/)) {
+  if (e.target.value.match(/^[a-z A-Z À-ÿ]{1,25}$/)) {
     errorMessageNom.innerHTML = "";
     valueNom = e.target.value;
   }
-  if (!e.target.value.match(/^[a-z A-Z]{3,25}$/) && e.target.value.length > 3 && e.target.value.length < 25) {
-    errorMessageNom.innerHTML = "Nom ne contien pas de caractéres spécial";
+  if (!e.target.value.match(/^[a-z A-Z À-ÿ]{1,25}$/) && e.target.value.length > 1 && e.target.value.length < 25) {
+    errorMessageNom.innerHTML = "Nom ne contien pas de caractéres spécial hors mis les accents et les tirets";
     valueNom = null;
   }
 });
@@ -238,16 +238,16 @@ adresse.addEventListener("input", (e) => {
     errorMessageAdresse.innerHTML = "";
     valueAdresse = null;
   }
-  else if (e.target.value.length < 3 || e.target.value.length > 25) {
-    errorMessageAdresse.innerHTML = "Adresse doit contenir entre 3 et 25 caractéres";
+  else if (e.target.value.length < 1 || e.target.value.length > 25) {
+    errorMessageAdresse.innerHTML = "Adresse doit contenir entre 1 et 25 caractéres";
     valueAdresse = null;
   }
-  if (e.target.value.match(/^[0-9]{1,3} [a-z A-Z]{3,25}$/)) {
+  if (e.target.value.match(/^[0-9]{1,3} [a-z A-Z À-ÿ]{1,25}$/)) {
     errorMessageAdresse.innerHTML = "";
     valueAdresse = e.target.value;
   }
-  if (!e.target.value.match(/^[0-9]{1,3} [a-z A-Z]{3,25}$/) && e.target.value.length > 3 && e.target.value.length < 25) {
-    errorMessageAdresse.innerHTML = "Adresse commence par des chiffre et des lettres, et sans de caractéres spécial";
+  if (!e.target.value.match(/^[0-9]{1,3} [a-z A-Z À-ÿ]{1,25}$/) && e.target.value.length > 1 && e.target.value.length < 25) {
+    errorMessageAdresse.innerHTML = "Adresse commence par des chiffre et des lettres, et sans de caractéres spécial hors mis les accents et les tirets";
     valueAdresse = null;
   }
 });
@@ -261,16 +261,16 @@ ville.addEventListener("input", (e) => {
     errorMessageVille.innerHTML = "";
     valueVille = null;
   }
-  else if (e.target.value.length < 3 || e.target.value.length > 25) {
-    errorMessageVille.innerHTML = "Ville doit contenir entre 3 et 25 caractéres";
+  else if (e.target.value.length < 1 || e.target.value.length > 25) {
+    errorMessageVille.innerHTML = "Ville doit contenir entre 1 et 25 caractéres";
     valueVille = null;
   }
-  if (e.target.value.match(/^[a-z A-Z]{3,25}$/)) {
+  if (e.target.value.match(/^[a-z A-Z À-ÿ]{1,25}$/)) {
     errorMessageVille.innerHTML = "";
     valueVille = e.target.value;
   }
-  if (!e.target.value.match(/^[a-z A-Z]{3,25}$/) && e.target.value.length > 3 && e.target.value.length < 25) {
-    errorMessageVille.innerHTML = "Ville ne contien pas de caractéres spécial";
+  if (!e.target.value.match(/^[a-z A-Z À-ÿ]{1,25}$/) && e.target.value.length > 1 && e.target.value.length < 25) {
+    errorMessageVille.innerHTML = "Ville ne contien pas de caractéres spécial hors mis les accents et les tirets";
     valueVille = null;
   }
 });
