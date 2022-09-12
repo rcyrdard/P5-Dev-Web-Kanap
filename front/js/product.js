@@ -1,6 +1,6 @@
 
 const product = window.location.search.split("?").join("");
-let productsData = [];
+let produitsData = [];
 let affichageQuantite = document.getElementById("totalQuantity");
 
 
@@ -10,7 +10,8 @@ const fetchproduct = async () => {
     await fetch(`http://localhost:3000/api/products/${product}`)
         .then((res) => res.json())
         .then((promise) => {
-            productsData = promise;
+            produitsData = promise;
+            // console.log(produitsData);
         })
         .catch((error) => {
             alert(error)
@@ -23,82 +24,90 @@ const fetchproduct = async () => {
 const produitDisplay = async () => {
     await fetchproduct();
 
-    document.querySelector('.item__img').innerHTML = `<img src="${productsData.imageUrl}" alt="${productsData.altTxt}">`
-    document.getElementById('title').innerText = `${productsData.name}`
-    document.getElementById('price').innerText = `${productsData.price}`
-    document.getElementById('description').innerText = `${productsData.description}`;
+    document.querySelector('.item__img').innerHTML = `<img src="${produitsData.imageUrl}" alt="${produitsData.altTxt}">`
+    document.getElementById('title').innerText = `${produitsData.name}`
+    document.getElementById('price').innerText = `${produitsData.price}`
+    document.getElementById('description').innerText = `${produitsData.description}`;
 
     let select = document.getElementById('colors');
-    productsData.colors.forEach((e) => {
+    produitsData.colors.forEach((e) => {
         let option = document.createElement('option');
         option.innerHTML = `${e}`;
         option.value = `${e}`;
         select.appendChild(option);
     });
-    addCanape(productsData);
+    ajoutCanape(produitsData);
+
 }
 produitDisplay();
 
 
 ////////////  AJOUT DU PRODUIT DANS LE LOCALSTORAGE ET RECUPERATION DANS LE PANIER  ///////////
 
-const addCanape = () => {
+const ajoutCanape = () => {
     let bouton = document.getElementById('addToCart');
     bouton.addEventListener("click", () => {
         let produitTableau = JSON.parse(localStorage.getItem("produit"));
         let select = document.getElementById("colors");
-
         let nombreArticles = document.getElementById("quantity");
-        let prixArticle = document.getElementById("price");
 
 
-        const fusionProduitColors = Object.assign({}, productsData, {
-            colors: `${select.value}`,
-            quantite: 1,
-            quantite: `${nombreArticles.value}`,
-        });
-        console.log(fusionProduitColors);
+        // let rechercheQuantite = [];
+        // produitTableau.forEach((element) => {
+        //     rechercheQuantite.push(element.quantite);
+        // });
+        // console.log("recherche quantite", rechercheQuantite);
+        // let lastItem = rechercheQuantite[rechercheQuantite.length - 1];
+        // console.log("Last element is", lastItem);
 
-        if (produitTableau == null) {
-            produitTableau = [];
-            meubleQuantiteTotal = [];
-            produitTableau.push(fusionProduitColors);
-            localStorage.setItem("produit", JSON.stringify(produitTableau));
 
-        } else if (produitTableau != null) {
-            meubleQuantiteTotal = [];
+        if (select.value && nombreArticles.value && (nombreArticles.value > 0 && nombreArticles.value <= 100)) {
 
-            for (i = 0; i < produitTableau.length; i++) {
-                if (
-                    produitTableau[i]._id == productsData._id &&
-                    produitTableau[i].colors == select.value
-                ) {
-                    return (
-                        produitTableau[i].quantite++,
-                        console.log("quantite++"),
-                        localStorage.setItem("produit", JSON.stringify(produitTableau)),
-                        (produitTableau = JSON.parse(localStorage.getItem("produit"))),
-                        console.log("yorchi !")
-                    );
+            const fusionProduitCouleurs = Object.assign({}, produitsData, {
+                colors: `${select.value}`,
+                quantite: Number(nombreArticles.value),
+            });
+
+            if (produitTableau == null) {
+                produitTableau = [];
+                meubleQuantiteTotal = [];
+                produitTableau.push(fusionProduitCouleurs);
+                localStorage.setItem("produit", JSON.stringify(produitTableau));
+            } else if (produitTableau != null) {
+                meubleQuantiteTotal = [];
+
+                for (i = 0; i < produitTableau.length; i++) {
+                    if (
+                        (produitTableau[i]._id == produitsData._id &&
+                            produitTableau[i].colors == select.value)
+                    ) {
+                        return (
+                            produitTableau[i].quantite += Number(nombreArticles.value),
+                            localStorage.setItem("produit", JSON.stringify(produitTableau)),
+                            (produitTableau = JSON.parse(localStorage.getItem("produit")))
+                        );
+                    }
+                }
+                for (i = 0; i < produitTableau.length; i++) {
+                    if (
+                        (produitTableau[i]._id == produitsData._id &&
+                            produitTableau[i].colors != select.value) ||
+                        produitTableau[i]._id != produitsData._id
+                    ) {
+                        return (
+                            produitTableau.push(fusionProduitCouleurs),
+                            localStorage.setItem("produit", JSON.stringify(produitTableau)),
+                            (produitTableau = JSON.parse(localStorage.getItem("produit")))
+                        );
+                    }
                 }
             }
-            for (i = 0; i < produitTableau.length; i++) {
-                if (
-                    (produitTableau[i]._id == productsData._id &&
-                        produitTableau[i].colors != select.value) ||
-                    produitTableau[i]._id != productsData._id
-                ) {
-                    return (
-                        produitTableau.push(fusionProduitColors),
-                        localStorage.setItem("produit", JSON.stringify(produitTableau)),
-                        (produitTableau = JSON.parse(localStorage.getItem("produit")))
-                    );
-                }
-            }
+        } else {
+            alert("N'oubliez pas de chosir une couleur et une quantité (entre 1 et 100 max)")
         }
     });
     return (
         (produitTableau = JSON.parse(localStorage.getItem("produit")))
-
     );
 };
+
