@@ -51,6 +51,106 @@ const ajoutCanape = () => {
         let select = document.getElementById("colors");
         let nombreArticles = document.getElementById("quantity");
 
+        // console.log("produitTableau", produitTableau);
+
+
+
+
+
+
+
+
+        // let rechercheId = [];
+        // produitTableau.forEach((element) => {
+        //     // rechercheId.push(element._id, element.quantite);
+        //     if (element_id) {
+        //         let quantiteElement = eval(element.quantite);
+        //         console.log("quantite des id:", element.quantiteElement);
+        //     }
+        // });
+        // console.log("recherche quantite", rechercheId);
+
+
+
+
+
+
+
+
+        ////////////////////  TABLE MULTIPLICATION  ///////////////////
+
+        // for(let j=1; j<=12; j++) {
+        //     document.getElementById("p"+j).innerHTML = "Table de :"+j+"<br><br>";
+        //     for(let i=1; i<=12; i++) {
+        //         document.getElementById("p"+j).innerHTML += i+" x "+j+" = "+ j*i +"<br>";
+        //     } 
+        // }
+
+
+
+
+        // let tableauElement = [];
+        // for (let j = 0; j <= produitTableau.length; j++) {
+        //     tableauElement.push(produitTableau[j][_id])
+        //     // document.getElementById("p"+j).innerHTML = "Table de :"+j+"<br><br>";
+        //     // for(let i=1; i<=12; i++) {
+        //     //     document.getElementById("p"+j).innerHTML += i+" x "+j+" = "+ j*i +"<br>";
+        //     // } 
+        // }
+        // console.log("tableauElement", tableauElement);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // let additionQuantite = [];
+        // rechercheId.forEach((element) => {
+        //     // additionQuantite += rechercheId[i];
+        //     additionQuantite.push(element.quantite);
+        // });
+        // console.log("additionQuantite", additionQuantite);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // let rechercheQuantite = [];
         // produitTableau.forEach((element) => {
@@ -59,6 +159,31 @@ const ajoutCanape = () => {
         // console.log("recherche quantite", rechercheQuantite);
         // let lastItem = rechercheQuantite[rechercheQuantite.length - 1];
         // console.log("Last element is", lastItem);
+
+
+        // let additionQuantite = 0;
+        // for (let i = 0; i < rechercheQuantite.length; i++) {
+        //     additionQuantite += rechercheQuantite[i];
+        // }
+        // console.log("additionQuantite", additionQuantite);
+
+
+
+
+
+
+
+
+
+
+
+        // const array = [1, 2, 3, 4];
+        // let sum = 0;
+
+        // for (let i = 0; i < array.length; i++) {
+        //     sum += array[i];
+        // }
+        // console.log(sum);
 
 
         if (select.value && nombreArticles.value && (nombreArticles.value > 0 && nombreArticles.value <= 100)) {
@@ -84,7 +209,8 @@ const ajoutCanape = () => {
                         return (
                             produitTableau[i].quantite += Number(nombreArticles.value),
                             localStorage.setItem("produit", JSON.stringify(produitTableau)),
-                            (produitTableau = JSON.parse(localStorage.getItem("produit")))
+                            (produitTableau = JSON.parse(localStorage.getItem("produit"))),
+                            (alert("Ajout de   " + Number(nombreArticles.value) + " canapés     " + produitTableau[i].name + "    de couleur    " + produitTableau[i].colors + "    au panier."))
                         );
                     }
                 }
@@ -97,7 +223,8 @@ const ajoutCanape = () => {
                         return (
                             produitTableau.push(fusionProduitCouleurs),
                             localStorage.setItem("produit", JSON.stringify(produitTableau)),
-                            (produitTableau = JSON.parse(localStorage.getItem("produit")))
+                            (produitTableau = JSON.parse(localStorage.getItem("produit"))),
+                            (alert("Ajout de   " + Number(nombreArticles.value) + " canapés     " + produitTableau[i].name + "    de couleur    " + produitTableau[i].colors + "    au panier."))
                         );
                     }
                 }
