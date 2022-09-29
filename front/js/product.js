@@ -66,6 +66,7 @@ const ajoutCanape = () => {
                 meubleQuantiteTotal = [];
                 produitTableau.push(fusionProduitCouleurs);
                 localStorage.setItem("produit", JSON.stringify(produitTableau));
+                (alert("Ajout de   " + Number(nombreArticles.value) + " canapés     " + `${produitsData.name}` + "    de couleur    " + select.value + "    au panier."))
             } else if (produitTableau != null) {
                 meubleQuantiteTotal = [];
 
