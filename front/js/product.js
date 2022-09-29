@@ -79,7 +79,7 @@ const ajoutCanape = () => {
                             produitTableau[i].quantite += Number(nombreArticles.value),
                             localStorage.setItem("produit", JSON.stringify(produitTableau)),
                             (produitTableau = JSON.parse(localStorage.getItem("produit"))),
-                            (alert("Ajout de   " + Number(nombreArticles.value) + " canapés     " + produitTableau[i].name + "    de couleur    " + produitTableau[i].colors + "    au panier."))
+                            (alert("Ajout de   " + Number(nombreArticles.value) + " canapés     " + produitTableau[i].name + "    de couleur    " + select.value + "    au panier."))
                         );
                     }
                 }
@@ -93,7 +93,7 @@ const ajoutCanape = () => {
                             produitTableau.push(fusionProduitCouleurs),
                             localStorage.setItem("produit", JSON.stringify(produitTableau)),
                             (produitTableau = JSON.parse(localStorage.getItem("produit"))),
-                            (alert("Ajout de   " + Number(nombreArticles.value) + " canapés     " + produitTableau[i].name + "    de couleur    " + produitTableau[i].colors + "    au panier."))
+                            (alert("Ajout de   " + Number(nombreArticles.value) + " canapés     " + produitTableau[i].name + "    de couleur    " + select.value + "    au panier."))
                         );
                     }
                 }
