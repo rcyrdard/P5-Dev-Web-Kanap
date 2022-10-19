@@ -8,6 +8,8 @@ let commandeProduits = JSON.parse(localStorage.getItem("commandes"));
 let section = document.getElementById("cart__items");
 let quantiteTotal = document.getElementById("totalQuantity");
 let prixTotal = document.getElementById("totalPrice");
+quantiteTotal.textContent = 0;
+prixTotal.textContent = 0;
 
 let afficheQuantites = document.querySelectorAll(".itemQuantity");
 
@@ -19,7 +21,7 @@ const panierDisplay = async () => {
     if (ajoutProduit) {
         await ajoutProduit;
         section.innerHTML = ajoutProduit.map((produit) => `
-        <article class="cart__item" data-id="${produit._id}" data-colors="${produit.colors}">
+        <article class="cart__item" data-id="${produit._id}" data-colors="${produit.colors} data-quantite="${produit.colors} data-name="${produit.colors}">
               <div class="cart__item__img">
                 <img src="${produit.imageUrl}" alt="${produit.altTxt}">
               </div>
@@ -35,7 +37,7 @@ const panierDisplay = async () => {
                     <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produit.quantite}" data-id="${produit._id}" data-colors="${produit.colors}">
                   </div>
                   <div class="cart__item__content__settings__delete">
-                    <p class="deleteItem" data-id="${produit._id}" data-colors="${produit.colors}">Supprimer</p>
+                    <p class="deleteItem" data-id="${produit._id}" data-colors="${produit.colors}" data-quantite="${produit.quantite}" data-name="${produit.name}">Supprimer</p>
                   </div>
                 </div>
               </div>
@@ -69,7 +71,10 @@ const modificationQuantite = async (panierDisplay) => {
                     return (
                         ajoutProduit[i].quantite = Number(positive.value),
                         localStorage.setItem("produit", JSON.stringify(ajoutProduit)),
+
+                        // e.preventDefault()
                         location.reload()
+
                     );
                 }
             }
@@ -81,6 +86,8 @@ const modificationQuantite = async (panierDisplay) => {
 /////////////  SUPPRESSION DES PRODUITS DANS LE PANIER  ////////////////
 
 const supprimeProduit = async (panierDisplay) => {
+
+    let ajoutProduit = JSON.parse(localStorage.getItem("produit"));
     await panierDisplay;
     let corbeilles = document.querySelectorAll(".deleteItem");
     corbeilles.forEach((corbeille) => {
@@ -88,21 +95,31 @@ const supprimeProduit = async (panierDisplay) => {
 
             let totalajoutProduitRemove = ajoutProduit.length;
             if (totalajoutProduitRemove == 1) {
-                return (
-                    localStorage.removeItem("produit"),
-                    (location.href = "cart.html")
-                );
+                if (confirm("Voulez-vous vraiment supprimé " + `${corbeille.dataset.quantite} ` + ` ${corbeille.dataset.name}` + "  de couleurs " + `${corbeille.dataset.colors}` + "  ?")) {
+                    return (
+                        localStorage.removeItem("produit"),
+                        // (location.href = "cart.html")
+                        (location.reload())
+                        // e.preventDefault
+                    );
+                }
             } else {
-                someProduit = ajoutProduit.filter((el) => {
-                    if (
-                        corbeille.dataset.id != el._id ||
-                        corbeille.dataset.colors != el.colors
-                    ) {
-                        return true;
+                if (confirm("Voulez-vous vraiment supprimé " + `${corbeille.dataset.quantite} ` + ` ${corbeille.dataset.name}` + "  de couleurs " + `${corbeille.dataset.colors}` + "  ?")) {
+                    someProduit = ajoutProduit.filter((el) => {
+                        if (
+                            corbeille.dataset.id != el._id ||
+                            corbeille.dataset.colors != el.colors
+                        ) {
+                            return true;
+                        }
                     }
-                });
-                localStorage.setItem("produit", JSON.stringify(someProduit));
-                location.href = "cart.html";
+                    );
+                    localStorage.setItem("produit", JSON.stringify(someProduit));
+                    // location.href = "cart.html";
+                    location.reload();
+                    // e.preventDefault
+
+                }
             }
         });
     });
@@ -115,12 +132,10 @@ const supprimeProduit = async (panierDisplay) => {
 const calculProduit = async (
     panierDisplay,
     modificationQuantite,
-    // plusQuantite,
     supprimeProduit,
 ) => {
     await panierDisplay;
     await modificationQuantite;
-    // await plusQuantite;
     await supprimeProduit;
 
     let produitPrice = [];
@@ -196,8 +211,8 @@ prenom.addEventListener("input", (e) => {
         erreurMessagePrenom.innerHTML = "";
         valuePrenom = e.target.value;
     }
-    if (!e.target.value.match(/^[a-z A-Z À-ÿ \-]{1,25}$/) && e.target.value.length > 1 && e.target.value.length < 25) {
-        erreurMessagePrenom.innerHTML = "Prenom ne contien pas de caractéres spécial hors mis les accents et les tirets";
+    if (!e.target.value.match(/^[a-z A-Z À-ÿ \-]{1,25}$/) && e.target.value.length >= 1 && e.target.value.length < 25) {
+        erreurMessagePrenom.innerHTML = "Prenom ne contien ni chiffres, ni caractéres spécial hors mis les accents et les tirets";
         valuePrenom = null;
     }
 });
@@ -219,8 +234,8 @@ nom.addEventListener("input", (e) => {
         erreurMessageNom.innerHTML = "";
         valueNom = e.target.value;
     }
-    if (!e.target.value.match(/^[a-z A-Z À-ÿ]{1,25}$/) && e.target.value.length > 1 && e.target.value.length < 25) {
-        erreurMessageNom.innerHTML = "Nom ne contien pas de caractéres spécial hors mis les accents et les tirets";
+    if (!e.target.value.match(/^[a-z A-Z À-ÿ]{1,25}$/) && e.target.value.length >= 1 && e.target.value.length < 25) {
+        erreurMessageNom.innerHTML = "Nom ne contien ni chiffres, ni caractéres spécial hors mis les accents et les tirets";
         valueNom = null;
     }
 });
@@ -242,8 +257,8 @@ adresse.addEventListener("input", (e) => {
         erreurMessageAdresse.innerHTML = "";
         valueAdresse = e.target.value;
     }
-    if (!e.target.value.match(/^[0-9]{1,3} [a-z A-Z À-ÿ]{1,25}$/) && e.target.value.length > 1 && e.target.value.length < 25) {
-        erreurMessageAdresse.innerHTML = "Adresse commence par des chiffre et des lettres, et sans de caractéres spécial hors mis les accents et les tirets";
+    if (!e.target.value.match(/^[0-9]{1,3} [a-z A-Z À-ÿ]{1,25}$/) && e.target.value.length >= 1 && e.target.value.length < 25) {
+        erreurMessageAdresse.innerHTML = "Adresse commence par des chiffres et des lettres, et sans de caractéres spécial hors mis les accents et les tirets";
         valueAdresse = null;
     }
 });
@@ -265,8 +280,8 @@ ville.addEventListener("input", (e) => {
         erreurMessageVille.innerHTML = "";
         valueVille = e.target.value;
     }
-    if (!e.target.value.match(/^[a-z A-Z À-ÿ]{1,25}$/) && e.target.value.length > 1 && e.target.value.length < 25) {
-        erreurMessageVille.innerHTML = "Ville ne contien pas de caractéres spécial hors mis les accents et les tirets";
+    if (!e.target.value.match(/^[a-z A-Z À-ÿ]{1,25}$/) && e.target.value.length >= 1 && e.target.value.length < 25) {
+        erreurMessageVille.innerHTML = "Ville ne contien ni chiffres, ni caractéres spécial hors mis les accents et les tirets";
         valueVille = null;
     }
 });
@@ -299,6 +314,10 @@ formulaire.addEventListener("submit", (e) => {
 
     if (valuePrenom && valueNom && valueAdresse && valueVille && valueEmail) {
         const commandeFinal = JSON.parse(localStorage.getItem("produit"));
+
+        if (!ajoutProduit) {
+            alert("Impossible de commander sans produits dans le panier !")
+        }
 
         let commandeId = [];
         commandeFinal.forEach((commande) => {
